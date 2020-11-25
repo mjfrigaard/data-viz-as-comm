@@ -24,7 +24,7 @@ knitr::opts_chunk$set(warning = FALSE,
                       dpi = 320, 
                       fig.height = 4, 
                       fig.path = "img/")
-
+options(width = 60, max.print = 60)
 ```
 
 ```{r xaringan-themer-and-xaringan-inf_mr(), include=FALSE, warning=FALSE}
@@ -38,6 +38,26 @@ background-position: 50% 70%
 background-size: 35%
 
 # `ggplot2` = a grammar for data visualization
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Load the packages 
+
+<br><br><br><br>
+
+```{r packages, eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
 
 ---
 class: left, top
@@ -231,15 +251,131 @@ background-position: 95% 8%
 background-size: 8%
 
 
-## Example 1
+# Example 1
+
+## How has COVID changed our modes of transportation?
+
+### What kind of measurements would this be?
+
+*how people travel (walk, drive, etc.)*
+
+### What would these data look like?
+
+*what would the columns and rows look like?*
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Apple Mobility Data
+
+## Fortunately, these data exist!
+
+Apple released mobility data: 
+
+https://covid19.apple.com/mobility
+
+Import these data below: 
+
+```{r import-AppleMobRaw}
+AppleMobRaw <- readr::read_csv("https://bit.ly/apple-mob-data")
+```
+
+*Use `Raw` as a prefix or suffix for data in it's most 'raw' state*
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Apple Mobility Data
+
+```{r AppleMobRaw-View, eval=FALSE}
+AppleMobRaw %>% View("Apple")
+```
+
+
+```{r apple-mob-view, echo=FALSE, out.width='75%', out.height='75%'}
+knitr::include_graphics(path = "img/apple-mob-view.png")
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Apple Mobility Data
+
+## Wrangling
+
+--
+
+### What variables do we have? 
+
+--
+
+### How are these variables formatted? 
+
+--
+
+### How do we need to change them? 
+
+--
+
+#### *...with a focus on answering our question*
 
 
 
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Apple Mobility Data
+
+```{r AppleMobRaw-head, eval=FALSE}
+AppleMobRaw %>% head()
+```
+
+```{r AppleMobRaw-head-show, echo=FALSE}
+rmarkdown::paged_table(AppleMobRaw %>% head())
+```
 
 
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
 
+# Apple Mobility Data
 
+```{r AppleMobRaw-tail, eval=FALSE}
+AppleMobRaw %>% tail()
+```
 
+```{r AppleMobRaw-tail-show, echo=FALSE}
+rmarkdown::paged_table(AppleMobRaw %>% tail())
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Apple Mobility Data
+
+## Tidying
+
+```{r}
+
+```
 
 
 
