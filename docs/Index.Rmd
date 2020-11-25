@@ -1,0 +1,270 @@
+---
+title: "Data Visualization as Communication"
+comment: "*using graphs to effectively share ideas*"
+author: 
+  - "Martin Frigaard"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(reprex)
+library(xaringan)
+library(pagedown)
+library(xaringanthemer)
+# folders
+folders <- c("code", "data", "img", "pdfs")
+purrr::map(.x = folders, .f = fs::dir_create)
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      fig.align = "center", 
+                      dpi = 320, 
+                      fig.height = 4, 
+                      fig.path = "img/")
+
+```
+
+```{r xaringan-themer-and-xaringan-inf_mr(), include=FALSE, warning=FALSE}
+xaringanthemer::style_duo_accent(primary_color = "#035AA6", secondary_color = "#03A696")
+# xaringan::inf_mr() # use for instant knitting and reviewing
+```
+
+class: inverse, center, top
+background-image: url(img/ggplot2.png)
+background-position: 50% 70%
+background-size: 35%
+
+# `ggplot2` = a grammar for data visualization
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Objectives
+
+### Recognize the needs of your audience 
+
+#### *level of data literacy, subject matter expertise, etc.*
+
+### Check and communicate data quality with stakeholders  
+
+#### *let them know the good and the bad news*
+
+### Identify the correct data visualization (based on the data)
+
+#### *single variable, bivariate, and multivariate graphs*
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Objectives (cont)
+
+<br>
+
+### Incorporate feedback from stakeholders/audience into graphs  
+
+#### *ask them to be part of the process*
+
+### Design visualizations with the appropriate detail and annotations
+
+####  *inform (and do not mislead) the audience*
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Materials
+
+## Slides 
+
+## Exercises 
+
+## RStudio Project
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Recap of `ggplot2`
+
+## In the previous lesson, we covered: 
+
+### 1) The grammar of graphics
+
+- `ggplot2` is a language of *layers*, organized linearly 
+
+--
+
+- `ggplot2`'s layers give us a "*linear ordering of phrases*" to build an infinite number of graphs "*which convey a gnarly network of ideas.*" 
+
+--
+
+- "**Infinitely extensible**"
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Recap of `ggplot2` (cont)
+
+## In the previous lesson, we covered:
+
+### 2) Identifying graph aesthetics 
+
+--
+
+- position (`x` and `y`), size, color, shape, etc.
+
+--
+
+<br>
+
+```{r graph-elements, echo=FALSE, out.width='100%', out.height='100%'}
+knitr::include_graphics(path = "img/graph-elements.png")
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Recap of `ggplot2` (cont)
+
+## In the previous lesson, we covered:
+
+### 3) Recognizing and using `geoms`
+
+<br>
+
+--
+
+- Scatter plot = `geom_point()`
+
+--
+
+- Box plot = `geom_boxplot()`
+
+--
+
+- Line graph = `geom_line()`  
+
+--
+
+- Bar graph = `geom_histogram()`, `geom_bar()`, `geom_col()`
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Recap of `ggplot2` (cont)
+
+## In the previous lesson, we covered:
+
+### 4) Labels and factes (exercises)
+
+- **Build labels first!** 
+
+```{r labs_object, eval=FALSE}
+ggplot2::labs(x = , y = , 
+              title = , subtitle = , 
+              caption = , tag = ) -> labs_object
+```
+
+--
+
+- Facets show subplots for different levels of a grouping variable
+
+- adjust `scales` argument
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# Getting started 
+
+### 1) Clearly define the question or problem
+
+- Start with a general goal, broad question, or novel problem
+
+- Move towards specific tasks 
+
+--
+
+### 2) Matching the measurements to metrics 
+
+- *'Measurements'* are what we care about  
+
+- *'Metrics'* are the available data
+
+--
+
+### 3) Is a data visualization the best choice?
+
+- Not always...
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+
+## Example 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r , eval=FALSE, echo=FALSE}
+library(SPYvsSPY)
+SPYvsSPY::svs %>% 
+  select(yrmo, white_comeuppance, black_comeuppance)
+```
