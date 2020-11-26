@@ -1016,6 +1016,10 @@ MaxUSCitiesDriving
 ```
 
 ```{r MaxUSCitiesDriving-no-show, echo=FALSE}
+TopUSCities %>% 
+  filter(trans_type == "driving") %>% 
+  group_by(region) %>% 
+  slice_max(dir_request) -> MaxUSCitiesDriving
 rmarkdown::paged_table(MaxUSCitiesDriving)
 ```
 
