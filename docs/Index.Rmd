@@ -1,5 +1,6 @@
 ---
 title: "Data Visualization as Communication"
+subtitle: "BioMarin Meetup: Advanced graphing techniques with ggplot2"
 comment: "*using graphs to effectively share ideas*"
 date: '`r Sys.Date()`'
 author: 
@@ -1141,6 +1142,8 @@ background-position: 95% 8%
 background-size: 8%
 
 # Facets
+
+
 
 
 ```{r SPYvsSPY, eval=FALSE, echo=FALSE}
