@@ -1,0 +1,85 @@
+Add the month, week, day to `TidyApple`.
+
+```{r month-week-day}
+TidyApple <- TidyApple %>%
+  mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE),
+         week = lubridate::week(date),
+         day = lubridate::day(date),
+         week_year = lubridate::floor_date(date, unit = "week"),
+         floor_month = lubridate::floor_date(date, unit = "month"))
+TidyApple %>% glimpse(60)
+```
+
+## Weekly US Trends
+
+How have the relative usage of direction changed over time in the US?
+
+```{r TidyAppleUS}
+TidyApple %>%
+  filter(country == "United States") -> TidyAppleUS
+TidyAppleUS %>% glimpse(60)
+```
+
+
+```{r , eval=FALSE}
+WeeklyData <- OnlineRetail %>%
+    dplyr::select(week_year, quantity) %>%
+    dplyr::group_by(week_year) %>%
+    dplyr::summarize(week_qty = sum(quantity)) %>%
+    dplyr::mutate(prev_week = lag(week_qty, 1)) %>%
+    dplyr::mutate(wow_quantity = (week_qty - prev_week) / prev_week) %>%
+    dplyr::mutate(month = lubridate::month(week_year,
+                                           abbr = TRUE,
+                                           label = TRUE)) %>%
+    dplyr::group_by(week_year)
+WeeklyData %>% dplyr::glimpse(78)
+```
+
+
+```{r AppleUSWeeklyData}
+AppleUSWeeklyData <- TidyApple %>%
+    dplyr::select(week_year, dir_request, sub_region, trans_type) %>%
+    dplyr::group_by(week_year) %>%
+    dplyr::summarize(week_dir_request = sum(dir_request)) %>%
+    dplyr::mutate(prev_week_dir_request = lag(week_dir_request, 1)) %>%
+    dplyr::mutate(wow_dir_request = (week_dir_request - prev_week_dir_request) / prev_week_dir_request) %>%
+    dplyr::mutate(month = lubridate::month(week_year,
+                                           abbr = TRUE,
+                                           label = TRUE)) %>%
+    dplyr::group_by(week_year)
+AppleUSWeeklyData
+```
+
+```{r}
+ggplot(
+  data = AppleUSWeeklyData,
+  mapping = aes(
+    x = week_year,
+    y = wow_dir_request)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::theme(axis.title = element_text()) +
+  ggplot2::theme(legend.title = element_blank()) +
+  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  ggplot2::facet_wrap(~ month,
+                      scales = "free_x") +
+  ggplot2::labs(y = "Sales",
+                x = "Week",
+                title = "Week Over Week Sales")
+```
+
+```{r}
+TopUSCityLabels %>%
+  mutate(labeled =
+           if_else(condition = country == "United States" &
+
+           region %in% c("New York City", "Los Angeles",
+                         "Chicago", "Houston", "Phoenix"),
+           true = TRUE,
+           false = FALSE))
+TidyApple5UsCities %>%
+  count(labeled, region, sub_region) %>%
+  pivot_wider(names_from = labeled, values_from = n) %>%
+  arrange(`TRUE`) %>%
+  head(10)
+```
