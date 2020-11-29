@@ -4,7 +4,7 @@
     <title>Data Visualization as Communication</title>
     <meta charset="utf-8" />
     <meta name="author" content="Martin Frigaard" />
-    <meta name="date" content="2020-11-26" />
+    <meta name="date" content="2020-11-29" />
     <script src="Index_files/header-attrs-2.5.3/header-attrs.js"></script>
     <link href="Index_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
     <script src="Index_files/pagedtable-1.1/js/pagedtable.js"></script>
@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 # Data Visualization as Communication
 ## BioMarin Meetup: Advanced graphing techniques with ggplot2
 ### Martin Frigaard
-### 2020-11-26
+### 2020-11-29
 
 ---
 
@@ -51,44 +51,45 @@ library(tidyverse)
 
 
 
-
 ---
 class: left, top
 background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-## Objectives
+## Outline
 
-### Recognize the needs of your audience 
+.pull-left[
 
-#### *level of data literacy, subject matter expertise, etc.*
+###  Recap `ggplot2`
 
-### Check and communicate data quality with stakeholders  
+###  Graphing preliminaries
 
-#### *let them know the good and the bad news*
+  - *Data Wrangling*
+  - *Tidying*
 
-### Identify the correct data visualization (based on the data)
+### Variable Distributions
 
-#### *single variable, bivariate, and multivariate graphs*
+  - *Histograms, density plots, violin plots*
 
----
-class: left, top
-background-image: url(img/ggplot2.png)
-background-position: 95% 8%
-background-size: 8%
+### Line Graphs
 
-## Objectives (cont)
+]
 
-&lt;br&gt;
+.pull-right[
 
-### Incorporate feedback from stakeholders/audience into graphs  
+### Adding Text
 
-#### *ask them to be part of the process*
+  - *Annotations, labeling values* 
 
-### Design visualizations with the appropriate detail and annotations
+### Reference Lines 
 
-####  *inform (and do not mislead) the audience*
+### Advanced Faceting 
+
+  - *facet_wrap(), facet_wrap_paginate(), facet_geo()* 
+
+]
+
 
 ---
 class: left, top
@@ -144,6 +145,8 @@ background-size: 8%
 
 ## In the previous lesson, we covered:
 
+### 1) The grammar of graphics
+
 ### 2) Identifying graph aesthetics 
 
 --
@@ -151,8 +154,6 @@ background-size: 8%
 - position (`x` and `y`), size, color, shape, etc.
 
 --
-
-&lt;br&gt;
 
 &lt;img src="img/graph-elements.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
@@ -166,9 +167,11 @@ background-size: 8%
 
 ## In the previous lesson, we covered:
 
-### 3) Recognizing and using `geoms`
+### 1) The grammar of graphics
 
-&lt;br&gt;
+### 2) Identifying graph aesthetics
+
+### 3) Recognizing and using `geoms`
 
 --
 
@@ -197,22 +200,20 @@ background-size: 8%
 
 ## In the previous lesson, we covered:
 
+### 1) The grammar of graphics
+
+### 2) Identifying graph aesthetics
+
+### 3) Recognizing and using `geoms`
+
 ### 4) Labels and factes (exercises)
 
 - **Build labels first!** 
 
-
-```r
-ggplot2::labs(x = , y = , 
-              title = , subtitle = , 
-              caption = , tag = ) -&gt; labs_object
-```
-
 --
 
-- Facets show subplots for different levels of a grouping variable
+- Facet for subplots of levels in a grouping variable
 
-- adjust `scales` argument
 
 ---
 class: inverse, center, top
@@ -222,13 +223,53 @@ background-size: 35%
 
 # Graphing preliminaries  
 
+
 ---
 class: left, top
 background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-# Getting started 
+## Things to consider (1)
+
+### Recognize the needs of your audience 
+
+#### *level of data literacy, subject matter expertise, etc.*
+
+### Check and communicate data quality with stakeholders  
+
+#### *let them know the good and the bad news*
+
+### Identify the correct data visualization (based on the data)
+
+#### *single variable, bivariate, and multivariate graphs*
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Things to consider (2)
+
+&lt;br&gt;
+
+### Incorporate feedback from stakeholders/audience into graphs  
+
+#### *ask them to be part of the process*
+
+### Design visualizations with the appropriate detail and annotations
+
+####  *inform (and do not mislead) the audience*
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Getting started 
 
 ### 1) Clearly define the question or problem
 
@@ -267,9 +308,9 @@ background-size: 8%
 
 ## Example: How has COVID changed our modes of transportation?
 
-### What kind of measurements would this be?
+### What kind of measurements would these be?
 
-***how people travel (walk, drive, etc.)***
+***how are people traveling (walk, drive, etc.)***
 
 --
 
@@ -394,7 +435,7 @@ AppleMobRaw %&gt;% tail()
 ---
 class: left, top
 background-image: url(img/ggplot2.png)
-background-position: 8% 94%
+background-position: 95% 8%
 background-size: 8%
 
 ### Tidying Apple Mobility Data 
@@ -820,14 +861,27 @@ Now we can see where they overlap
 
 &lt;img src="img/density-alpha-no-show-1.png" width="85%" height="85%" style="display: block; margin: auto;" /&gt;
 
-
 ---
-class: inverse, center, top
+class: left, top
 background-image: url(img/ggplot2.png)
-background-position: 50% 70%
-background-size: 35%
+background-position: 95% 8%
+background-size: 8%
 
-# Visualizing Trends
+## Violin Plots 
+
+Violin plots are alternatives to boxplots. 
+
+
+```r
+lab_violin &lt;- labs(y = "Apple directions requests",
+                   x = "Transportation Types",
+     title = "Direction Requests by Transportation Type",
+     subtitle = "source: https://covid19.apple.com/mobility")
+```
+
+These allow us to add a categorical variable to the `x` axis. 
+
+
 
 ---
 class: left, top
@@ -835,17 +889,96 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `TidyApple`: filtering dates
-
-**How have direction requests changed over time in US cities?**
-
-Filter the data to only us cities between `2020-02-01` and `2020-08-01`. Use `skimr::skim()` to make sure it works!
+## Violin Plots 
 
 
 ```r
 TidyApple %&gt;% 
+  ggplot() +
+* geom_violin(aes(y = dir_request, x = trans_type,
+*                 fill = trans_type)) +
+  lab_violin
+```
+
+
+
+
+&lt;img src="img/geom_violin-1.png" width="85%" height="85%" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Violin Plots: *confused?*
+
+Add a boxplot layer!
+
+
+```r
+TidyApple %&gt;% 
+  ggplot() +
+* geom_violin(aes(y = dir_request, x = trans_type,
+*                 fill = trans_type), alpha = 1/5)
+```
+
+--
+
+
+```r
+TidyApple %&gt;% 
+  ggplot() +
+  geom_violin(aes(y = dir_request, x = trans_type, 
+                  fill = trans_type), alpha = 1/5) + 
+* geom_boxplot(aes(y = dir_request, x = trans_type,
+*                  color = trans_type)) +
+  lab_violin
+```
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Violin Plots *and* Boxpots
+
+
+
+&lt;img src="img/geom_violin-geom_boxplot-run-no-show-1.png" width="95%" height="95%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+class: inverse, center, top
+background-image: url(img/ggplot2.png)
+background-position: 50% 70%
+background-size: 35%
+
+# Line Graphs
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Focus on US Cities During Spring/Summer
+
+Filter the data to only us cities between `2020-02-01` and `2020-08-01`. Use `skimr::skim()` to make sure it works!
+
+--
+
+
+```r
+TidyApple %&gt;% 
+  # us cities
   filter(geo_type == "city" &amp;
          country == "United States", 
+         # feb - aug
          date &gt;= lubridate::as_date("2020-02-01") &amp; 
          date &lt;= lubridate::as_date("2020-08-01")) %&gt;% 
          # check work!
@@ -858,11 +991,28 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `TidyAppleFilter`: filtered dates
+### `skimr` output
 
 These are helpful if we're checking a filter on a numerical certain condition (`min`, `max`, `mean`, etc.)
 
-&lt;img src="img/skimr-output.png" width="75%" height="75%" style="display: block; margin: auto auto auto 0;" /&gt;
+&lt;br&gt;
+
+&lt;img src="img/skimr-output.png" width="100%" height="100%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Narrow to US Cities (Feb-Jul) 
+
+&lt;br&gt;
+
+Create `USCitiesFebJul` data by filtering to US cities between Feb 1, 2020 and July 31, 2020.
+
+&lt;br&gt;
 
 
 ```r
@@ -870,7 +1020,7 @@ TidyApple %&gt;%
   filter(geo_type == "city" &amp;
          country == "United States", 
          date &gt;= lubridate::as_date("2020-02-01") &amp; 
-         date &lt;= lubridate::as_date("2020-08-01")) -&gt; TidyAppleFilter
+         date &lt;= lubridate::as_date("2020-08-01")) -&gt; USCitiesFebJul
 ```
 
 
@@ -881,20 +1031,107 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `TidyAppleFilter`: plot with filtered dates
+### Line Graph Labels (1)
 
-Ideally our labels update when the data changes. We can do this with `paste0()`.
+Ideally, our labels update whenever the data changes. We can do this with `paste0()`.
+
+
+```r
+paste0(min(USCitiesFebJul$date), 
+                       " through ", 
+                       max(USCitiesFebJul$date)) 
+```
+
+```
+## [1] "2020-02-01 through 2020-08-01"
+```
+
+--
+
+
+```r
+ subtitle = paste0(
+                    min(USCitiesFebJul$date), # first date
+                    " through ", # plain text
+                    max(USCitiesFebJul$date)  # last date
+                    ), 
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Line Graph Labels (2)
+
+&lt;br&gt;
+
+We can then supply the `subtitle` to `labs`
+
+&lt;br&gt;&lt;br&gt;
+
 
 
 ```r
 labs(x = "Date",
      y = "Direction Requests",
      title = "Direction Requests Over Time (US Cities Only)",
-*    subtitle = paste0(min(TidyAppleFilter$date),
+*    subtitle = paste0(min(USCitiesFebJul$date),
 *                      " through ",
-*                      max(TidyAppleFilter$date)),
+*                      max(USCitiesFebJul$date)),
      caption = "source: https://covid19.apple.com/mobility", 
      color = "Transit Type") -&gt; lab_line_graph
+```
+
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Line Graph Labels Labels (3)
+
+&lt;br&gt;
+
+
+
+
+&lt;img src="img/apply-lab_line_graph-show.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Line Graphs: Overlapping Lines
+
+Consider our previous line graph--the lines overlap a bit.
+
+&lt;img src="img/apply-lab_line_graph-no-run-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Line Graph: Line Size (1)
+
+We can minimize the size of the line with the `size` aesthetic.
+
+
+```r
+USCitiesFebJul %&gt;% 
+  ggplot() +
+  geom_line(aes(x = date, y = dir_request, 
+             group = trans_type, color = trans_type), 
+            # make these slightly smaller
+            size = 0.30) + 
+  lab_line_graph
 ```
 
 ---
@@ -903,18 +1140,14 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `TidyAppleFilter`: plot with filtered dates
+### Line Graph: Line Size (2)
+
+This makes the trends easier to see.
 
 
-```r
-TidyAppleFilter %&gt;% 
-  ggplot() +
-  geom_line(aes(x = date, y = dir_request, 
-             group = trans_type, color = trans_type)) + 
-* lab_line_graph
-```
 
-&lt;img src="img/apply-lab_line_graph-show.png" width="85%" height="85%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/geom_line-smaller-size-no-show-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: inverse, center, top
@@ -922,7 +1155,7 @@ background-image: url(img/ggplot2.png)
 background-position: 50% 70%
 background-size: 35%
 
-# Labeling Values 
+# Adding Text
 
 ---
 class: left, top
@@ -930,13 +1163,214 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `TidyApple`: Labeling Values
+## Labeling Missing Data 
+
+There is a gap in the direct request data (this is [documented in the data source](https://covid19.apple.com/mobility)). 
+
+--
+
+&gt; *"Data for May 11-12 is not available and will appear as blank columns in the data set."*
+
+--
+
+&lt;img src="img/geom_line-smaller-size-no-show-1.png" width="75%" height="75%" style="display: block; margin: auto;" /&gt;
+
+We should annotate this on a line graph!
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Create Annotate Data
+
+These data are `filter`ed to US cities between March 1, 2020 to June 30, 2020.
+
+
+```r
+USCitiesMarJun &lt;-  TidyApple %&gt;% 
+  filter(geo_type == "city" &amp; country == "United States", 
+         date &gt;= lubridate::as_date("2020-03-01") &amp; 
+         date &lt;= lubridate::as_date("2020-07-01"))
+```
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Annotate Data
+
+
+```r
+USCitiesMarJun
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["geo_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trans_type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sub_region"],"name":[4],"type":["chr"],"align":["left"]},{"label":["country"],"name":[5],"type":["chr"],"align":["left"]},{"label":["date"],"name":[6],"type":["date"],"align":["right"]},{"label":["dir_request"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-01","7":"91.46"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-02","7":"107.46"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-03","7":"111.38"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-04","7":"111.55"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-05","7":"119.94"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-06","7":"133.31"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-07","7":"134.39"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-08","7":"98.89"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-09","7":"109.00"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-10","7":"107.88"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-11","7":"108.33"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-12","7":"101.91"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-13","7":"109.41"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-14","7":"99.23"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-15","7":"71.34"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-16","7":"79.93"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-17","7":"73.77"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-18","7":"70.88"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-19","7":"70.50"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-20","7":"76.35"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-21","7":"62.26"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-22","7":"51.87"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-23","7":"58.65"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-24","7":"51.41"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-25","7":"57.88"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-26","7":"62.39"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-27","7":"69.75"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-28","7":"54.00"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-29","7":"51.98"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-30","7":"57.49"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-03-31","7":"60.24"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-01","7":"63.18"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-02","7":"66.00"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-03","7":"74.11"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-04","7":"71.11"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-05","7":"50.17"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-06","7":"68.37"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-07","7":"64.03"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-08","7":"73.37"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-09","7":"68.02"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-10","7":"73.04"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-11","7":"72.95"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-12","7":"42.29"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-13","7":"62.67"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-14","7":"70.40"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-15","7":"73.55"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-16","7":"76.63"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-17","7":"76.75"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-18","7":"82.45"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-19","7":"65.10"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-20","7":"82.40"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-21","7":"75.77"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-22","7":"78.08"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-23","7":"81.02"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-24","7":"94.79"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-25","7":"91.99"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-26","7":"59.74"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-27","7":"86.73"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-28","7":"84.76"},{"1":"city","2":"Akron","3":"driving","4":"Ohio","5":"United States","6":"2020-04-29","7":"83.55"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### `annotate`: Build Labels 
+
+Build our labels first!
+
+
+```r
+labs(x = "Date",
+     y = "Direction Requests",
+     title = "Spring Direction Requests (Mar-Jun) in US Cities",
+*    subtitle = paste0(min(USCitiesMarJun$date),
+                       " through ", 
+*                      max(USCitiesMarJun$date)),
+     caption = "source: https://covid19.apple.com/mobility", 
+     color = "Transit Type") -&gt; lab_annotation
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### `annotate`: Build Line Graph 
+
+Build a line graph layer (`gg_line_annotate`)
+
+
+```r
+USCitiesMarJun %&gt;% 
+    ggplot() +
+    geom_line(aes(x = date, y = dir_request, 
+             group = trans_type, color = trans_type), 
+             size = 0.30) -&gt; gg_line_annotate
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### `annotate`: build coordinate system
+
+Add a coordinate system layer (`gg_coord_system`)
+
+
+```r
+coord_cartesian(
+ xlim = c(min(USCitiesMarJun$date), 
+          max(USCitiesMarJun$date)), 
+ 
+ ylim = c(min(USCitiesMarJun$dir_request, na.rm = TRUE), 
+          max(USCitiesMarJun$dir_request, na.rm = TRUE))) -&gt; 
+  gg_coord_system
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### `annotate`: build line segment 
+
+Build vertical line segment (`gg_line_segment`)
+
+
+```r
+annotate(geom = "segment", 
+        size = 1, 
+        color = "firebrick3",
+        x = lubridate::as_date("2020-05-11"), 
+        xend = lubridate::as_date("2020-05-11"), 
+        y = 270, 
+        yend = 100) -&gt; gg_line_segment
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### `annotate`: Build Text Annotatation 
+
+Build text annotation (`gg_text_annotation`)
+
+
+```r
+annotate(geom = "text",
+           color = "red", 
+           hjust = 0.5, 
+           size = 6,
+           x = lubridate::as_date("2020-05-07"), 
+           y = 300, 
+           label = "Data not available") -&gt; gg_text_annotation
+```
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+
+### `annotate`: Combine Layers
+
+Now we can use the `ggplot2` syntax to combine these layers...
+
+&lt;br&gt;&lt;br&gt;
+
+
+```r
+gg_line_annotate + # line graph
+  gg_coord_system + # coordinate system 
+  gg_line_segment + # line annotation
+  gg_text_annotation + # text annotation 
+  lab_annotation # labels
+```
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+
+### `annotate`: Complete Graph
+
+...and we see a complete graph!
+
+&lt;img src="img/build-annotation-graph-show-1.png" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/build-annotation-graph-show-1.png" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Labeling Values (Review)
 
 In the previous slides, we learned about labeling values with `ggrepel`.
 
-&lt;img src="img/aes-sol-11-1.png" width="65%" height="65%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/aes-sol-11-1.png" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
 
-Now we're going to extend this to only plotting specific values as labels on the graph.
+Now we're going to extend this to plotting text and values on our graphs!
 
 ---
 class: left, top
@@ -944,9 +1378,9 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Create `TopUSCities`
+### Create `TopUSCities` 
 
-Filter `TidyApple` to the largest US cities (by population).
+Filter `TidyApple` to the largest US cities (by [population](https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population)).
 
 
 ```r
@@ -991,7 +1425,8 @@ Create a dataset with only the maximum direction request values for `"driving"` 
 TopUSCities %&gt;% 
   filter(trans_type == "driving") %&gt;% 
   group_by(region) %&gt;% 
-  slice_max(dir_request) -&gt; MaxUSCitiesDriving
+  slice_max(dir_request) %&gt;% 
+  ungroup() -&gt; MaxUSCitiesDriving
 ```
 
 ---
@@ -1007,6 +1442,8 @@ background-size: 8%
 MaxUSCitiesDriving
 ```
 
+&lt;br&gt;
+
 &lt;div data-pagedtable="false"&gt;
   &lt;script data-pagedtable-source type="application/json"&gt;
 {"columns":[{"label":["geo_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trans_type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sub_region"],"name":[4],"type":["chr"],"align":["left"]},{"label":["country"],"name":[5],"type":["chr"],"align":["left"]},{"label":["date"],"name":[6],"type":["date"],"align":["right"]},{"label":["dir_request"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-07-17","7":"166.11"},{"1":"city","2":"Houston","3":"driving","4":"Texas","5":"United States","6":"2020-02-14","7":"146.20"},{"1":"city","2":"Los Angeles","3":"driving","4":"California","5":"United States","6":"2020-02-14","7":"152.08"},{"1":"city","2":"New York City","3":"driving","4":"New York","5":"United States","6":"2020-09-04","7":"152.09"},{"1":"city","2":"Phoenix","3":"driving","4":"Arizona","5":"United States","6":"2020-02-29","7":"142.68"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1021,6 +1458,8 @@ background-size: 8%
 
 ### Create graph labels 
 
+&lt;br&gt;
+
 We know we want to see the max direction requests labeled, so we will update the labels for the graph.
 
 
@@ -1029,7 +1468,9 @@ lab_line_max_drivers &lt;- labs(
  x = "Date",
  y = "Direction Requests",
  title = "Peak Driving Direction Requests in Largest US Cities",
- subtitle = "Max Driving Direction Requests &amp; Date",
+ subtitle = paste0(min(TopUSCities$date), 
+                   " through ", 
+                   max(TopUSCities$date)),
  caption = "source: https://covid19.apple.com/mobility", 
  color = "Transit Type")
 ```
@@ -1056,16 +1497,19 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### View value labels 
+### View Value Labels 
+
+Take a look at the labels we've created 
 
 
 ```r
-MaxUSCitiesDriving
+MaxUSCitiesDriving %&gt;% 
+  select(max_driving_labels)
 ```
 
 &lt;div data-pagedtable="false"&gt;
   &lt;script data-pagedtable-source type="application/json"&gt;
-{"columns":[{"label":["geo_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trans_type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sub_region"],"name":[4],"type":["chr"],"align":["left"]},{"label":["country"],"name":[5],"type":["chr"],"align":["left"]},{"label":["date"],"name":[6],"type":["date"],"align":["right"]},{"label":["dir_request"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["max_driving_labels"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-07-17","7":"166.11","8":"Chicago, 2020-07-17"},{"1":"city","2":"Houston","3":"driving","4":"Texas","5":"United States","6":"2020-02-14","7":"146.20","8":"Houston, 2020-02-14"},{"1":"city","2":"Los Angeles","3":"driving","4":"California","5":"United States","6":"2020-02-14","7":"152.08","8":"Los Angeles, 2020-02-14"},{"1":"city","2":"New York City","3":"driving","4":"New York","5":"United States","6":"2020-09-04","7":"152.09","8":"New York City, 2020-09-04"},{"1":"city","2":"Phoenix","3":"driving","4":"Arizona","5":"United States","6":"2020-02-29","7":"142.68","8":"Phoenix, 2020-02-29"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["max_driving_labels"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Chicago, 2020-07-17"},{"1":"Houston, 2020-02-14"},{"1":"Los Angeles, 2020-02-14"},{"1":"New York City, 2020-09-04"},{"1":"Phoenix, 2020-02-29"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   &lt;/script&gt;
 &lt;/div&gt;
 
@@ -1075,7 +1519,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Create plot with labels
+### Create Line Layer + Label Layer
 
 
 ```r
@@ -1114,6 +1558,83 @@ background-image: url(img/ggplot2.png)
 background-position: 50% 70%
 background-size: 35%
 
+# Adding Reference Lines
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Reference Line Data 
+
+
+```r
+TopUSCities
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["geo_type"],"name":[1],"type":["chr"],"align":["left"]},{"label":["region"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trans_type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sub_region"],"name":[4],"type":["chr"],"align":["left"]},{"label":["country"],"name":[5],"type":["chr"],"align":["left"]},{"label":["date"],"name":[6],"type":["date"],"align":["right"]},{"label":["dir_request"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-13","7":"100.00"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-14","7":"103.68"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-15","7":"104.45"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-16","7":"108.72"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-17","7":"132.80"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-18","7":"113.44"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-19","7":"87.48"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-20","7":"100.24"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-21","7":"101.30"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-22","7":"100.51"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-23","7":"104.47"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-24","7":"121.92"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-25","7":"118.55"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-26","7":"85.17"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-27","7":"93.81"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-28","7":"97.36"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-29","7":"98.96"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-30","7":"103.79"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-01-31","7":"124.37"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-01","7":"122.53"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-02","7":"85.96"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-03","7":"94.62"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-04","7":"97.39"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-05","7":"102.86"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-06","7":"103.66"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-07","7":"117.63"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-08","7":"124.27"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-09","7":"88.41"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-10","7":"98.78"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-11","7":"105.64"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-12","7":"108.54"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-13","7":"115.99"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-14","7":"147.32"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-15","7":"141.24"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-16","7":"111.31"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-17","7":"111.07"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-18","7":"104.69"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-19","7":"105.82"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-20","7":"110.84"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-21","7":"132.55"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-22","7":"138.50"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-23","7":"100.83"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-24","7":"99.41"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-25","7":"100.35"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-26","7":"103.39"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-27","7":"114.33"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-28","7":"139.02"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-02-29","7":"142.31"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-01","7":"105.39"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-02","7":"105.25"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-03","7":"108.28"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-04","7":"110.71"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-05","7":"116.43"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-06","7":"137.62"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-07","7":"144.91"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-08","7":"107.11"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-09","7":"105.68"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-10","7":"109.76"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-11","7":"107.34"},{"1":"city","2":"Chicago","3":"driving","4":"Illinois","5":"United States","6":"2020-03-12","7":"105.61"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Reference Line Labels 
+
+
+```r
+labs(x = "Date", 
+     y  = "Direction Requests", 
+     title = "Trends of Relative Activity in Selected US Cities",
+     subtitle = "NY, LA, CH, HOU, PHA, PHL, SATX, SD", 
+     color = "Type") -&gt; lab_ref_lines
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Horizontal Reference Lines
+
+Add the `geom_hline()` for a horizontal reference line (at `100`)
+
+
+```r
+TopUSCities %&gt;% 
+  ggplot(aes(x = date, y = dir_request, 
+             group = trans_type, 
+             color = trans_type)) + 
+  geom_line(size = 0.1) + 
+  geom_hline(yintercept = 100, size = 0.2, color = "gray20") +
+  lab_ref_lines
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Horizontal Reference Lines
+
+
+
+&lt;img src="img/geom_hline-show-1.png" width="95%" height="95%" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, center, top
+background-image: url(img/ggplot2.png)
+background-position: 50% 70%
+background-size: 35%
+
 # Advanced Facetting 
 
 ---
@@ -1122,8 +1643,89 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-# Facets
+## Faceting basics 
 
+Facets create subplots across levels of a categorical variable.
+
+
+```r
+TopUSCities %&gt;% 
+  ggplot(aes(x = date, y = dir_request, 
+             group = trans_type, 
+             color = trans_type)) + 
+  geom_line(size = 0.1) + 
+  geom_hline(yintercept = 100, 
+             size = 0.2, 
+             color = "gray20") +
+* facet_wrap(~ region,  ncol = 2) +
+  lab_ref_lines
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Single Variable Facets 
+
+&lt;img src="img/facet_wrap-show-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Multiple Variable Facets 
+
+
+```r
+TopUSCities %&gt;% 
+  ggplot(aes(x = date, y = dir_request, 
+             group = region, 
+             color = trans_type)) + 
+  geom_line(size = 0.1) + 
+  geom_hline(yintercept = 100, 
+             size = 0.2, 
+             color = "gray20") +
+* facet_wrap(region ~ trans_type, ncol = 5) +
+  lab_ref_lines
+```
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Multiple Variable Facets 
+
+&lt;img src="img/facet_wrap-2vars-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Advanced Faceting (`facet_wrap_paginate`)
+
+Check out the exercises for more advanced faceting with `facet_wrap_paginate()` from the `ggforce` package. 
+
+&lt;img src="img/facet_wrap_paginate-sol-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+### Advanced Faceting (`facet_geo`)
+
+Check out the exercises for more advanced faceting with `facet_geo()` from the `geofacet` package. 
+
+&lt;img src="img/facet_geo-sol-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 
 
