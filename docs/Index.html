@@ -4,7 +4,7 @@
     <title>Data Visualization as Communication</title>
     <meta charset="utf-8" />
     <meta name="author" content="Martin Frigaard" />
-    <meta name="date" content="2020-11-29" />
+    <meta name="date" content="2020-12-02" />
     <script src="Index_files/header-attrs-2.5.3/header-attrs.js"></script>
     <link href="Index_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
     <script src="Index_files/pagedtable-1.1/js/pagedtable.js"></script>
@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 # Data Visualization as Communication
 ## BioMarin Meetup: Advanced graphing techniques with ggplot2
 ### Martin Frigaard
-### 2020-11-29
+### 2020-12-02
 
 ---
 
@@ -101,9 +101,16 @@ background-size: 8%
 
 ## Slides 
 
+https://mjfrigaard.github.io/data-viz-as-comm/Index.html
+
 ## Exercises 
 
+https://mjfrigaard.github.io/r-meetup-tutorials/gg00_intro-to-data-viz.html
+
 ## RStudio Project
+
+https://rstudio.cloud/project/1983257
+
 
 ---
 class: inverse, center, top
@@ -221,7 +228,7 @@ background-image: url(img/ggplot2.png)
 background-position: 50% 70%
 background-size: 35%
 
-# Graphing preliminaries  
+# Before we start...  
 
 
 ---
@@ -232,13 +239,19 @@ background-size: 8%
 
 ## Things to consider (1)
 
+--
+
 ### Recognize the needs of your audience 
 
 #### *level of data literacy, subject matter expertise, etc.*
 
+--
+
 ### Check and communicate data quality with stakeholders  
 
 #### *let them know the good and the bad news*
+
+--
 
 ### Identify the correct data visualization (based on the data)
 
@@ -256,7 +269,9 @@ background-size: 8%
 
 ### Incorporate feedback from stakeholders/audience into graphs  
 
-#### *ask them to be part of the process*
+#### *ask them to be part of the process
+
+--
 
 ### Design visualizations with the appropriate detail and annotations
 
@@ -336,7 +351,7 @@ Import these data below:
 
 
 ```r
-AppleMobRaw &lt;- readr::read_csv("https://bit.ly/apple-mob-raw")
+AppleMobRaw &lt;- readr::read_csv("https://bit.ly/36tTVpe")
 ```
 
 *Use `Raw` as a prefix or suffix for data in it's most 'raw' state*
@@ -660,7 +675,9 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-## `TidyApple`: Visualizing variable distributions
+## What kinds of question(s) do graphs like these answer?
+
+### What does the distribution of direction requests look like?
 
 What is the distribution of `dir_request`? We will explore this with a histogram.
 
@@ -778,9 +795,21 @@ background-size: 6%
 
 ## Visualizing variable distributions across groups
 
-What is the distribution of `dir_request` across `trans_type`? 
+### What questions do these graphs answer?
 
-### We can view this with a density plot
+How does the distribution of `dir_request` across `trans_type`? 
+
+--
+
+### We can view this with a density plot, violin plot, or ridgeline plot
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Density Plots
 
 ### CREATE LABELS FIRST!! 
 
@@ -881,8 +910,6 @@ lab_violin &lt;- labs(y = "Apple directions requests",
 
 These allow us to add a categorical variable to the `x` axis. 
 
-
-
 ---
 class: left, top
 background-image: url(img/ggplot2.png)
@@ -951,6 +978,52 @@ background-size: 8%
 &lt;img src="img/geom_violin-geom_boxplot-run-no-show-1.png" width="95%" height="95%" style="display: block; margin: auto;" /&gt;
 
 
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Rideline Plots 
+
+Another option is a ridgeline plot (from the `ggridges` package). These display multiple densities. 
+
+
+```r
+lab_ridges &lt;- labs(x = "Apple directions requests",
+                   y = "Transportation Types",
+     title = "Direction Requests by Transportation Type",
+     subtitle = "source: https://covid19.apple.com/mobility")
+```
+
+
+```r
+library(ggridges)
+TidyApple %&gt;%  
+  ggplot() + 
+  geom_density_ridges(aes(x = dir_request, 
+                          y = trans_type, 
+                          fill = trans_type), 
+                      alpha = 1/5) + 
+  lab_ridges
+```
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+## Rideline Plots 
+
+We can adjust the alpha on these just like the density plots.
+
+&lt;img src="img/geom_density_ridges-plot-1.png" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/geom_density_ridges-plot-1.png" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+
+
 
 ---
 class: inverse, center, top
@@ -966,7 +1039,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Focus on US Cities During Spring/Summer
+### Narrowing date ranges
 
 Filter the data to only us cities between `2020-02-01` and `2020-08-01`. Use `skimr::skim()` to make sure it works!
 
@@ -991,7 +1064,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### `skimr` output
+### Check with `skimr` output
 
 These are helpful if we're checking a filter on a numerical certain condition (`min`, `max`, `mean`, etc.)
 
@@ -1031,7 +1104,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Line Graph Labels (1)
+### Line Graph: Labels (1)
 
 Ideally, our labels update whenever the data changes. We can do this with `paste0()`.
 
@@ -1063,7 +1136,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Line Graph Labels (2)
+### Line Graph: Labels (2)
 
 &lt;br&gt;
 
@@ -1092,7 +1165,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Line Graph Labels Labels (3)
+### Line Graph: Labels (3)
 
 &lt;br&gt;
 
@@ -1378,9 +1451,9 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Create `TopUSCities` 
+### Highlighting Large US Cities 
 
-Filter `TidyApple` to the largest US cities (by [population](https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population)).
+Filter `TidyApple` to the 5 largest US cities (by [population](https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population)).
 
 
 ```r
@@ -1416,7 +1489,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-## Create `MaxUSCitiesDriving` 
+## Highlighting Peak Driving
 
 Create a dataset with only the maximum direction request values for `"driving"` per `region`. 
 
@@ -1481,7 +1554,7 @@ background-image: url(img/ggplot2.png)
 background-position: 95% 8%
 background-size: 8%
 
-### Create value labels 
+### Create Value Labels 
 
 We will also use `paste0()` here to create a variable for the labels that combines the city and date. 
 
@@ -1590,10 +1663,10 @@ background-size: 8%
 
 ```r
 labs(x = "Date", 
-     y  = "Direction Requests", 
-     title = "Trends of Relative Activity in Selected US Cities",
-     subtitle = "NY, LA, CH, HOU, PHA, PHL, SATX, SD", 
-     color = "Type") -&gt; lab_ref_lines
+ y  = "Direction Requests", 
+ title = "Trends of Relative Activity in Selected US Cities",
+ subtitle = "New York, Los Angeles, Chicago, Houston, Phoenix",
+ color = "Type") -&gt; lab_ref_lines
 ```
 
 ---
@@ -1726,6 +1799,24 @@ background-size: 8%
 Check out the exercises for more advanced faceting with `facet_geo()` from the `geofacet` package. 
 
 &lt;img src="img/facet_geo-sol-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: left, top
+background-image: url(img/ggplot2.png)
+background-position: 95% 8%
+background-size: 8%
+
+# More Resources
+
+### [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
+
+### [ggplot2 extensions gallery](https://exts.ggplot2.tidyverse.org/gallery/)
+
+### [R Graphics Cookbook](https://r-graphics.org/)
+
+
+
 
 
 
