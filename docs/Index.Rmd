@@ -282,7 +282,7 @@ background-size: 8%
 
 ### Incorporate feedback from stakeholders/audience into graphs  
 
-#### *ask them to be part of the process*
+#### *ask them to be part of the process*  
 
 --
 
