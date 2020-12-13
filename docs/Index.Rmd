@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization as Communication"
-subtitle: "BioMarin Meetup: Advanced graphing techniques with ggplot2"
+subtitle: "bmRn CSM: Advanced graphing techniques with ggplot2"
 comment: "*using graphs to effectively share ideas*"
 date: '`r Sys.Date()`'
 author: 
